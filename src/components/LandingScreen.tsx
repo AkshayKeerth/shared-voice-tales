@@ -1,9 +1,9 @@
-
 import React from "react";
 import { ArrowRight, ShieldCheck, UserCheck } from "lucide-react";
 import MotionWrapper from "./MotionWrapper";
 import { Card, CardContent } from "./ui/card";
 import MicVoice from "./MicVoice";
+import Navbar from "./Navbar";
 
 interface LandingScreenProps {
   onStartClick: () => void;
@@ -12,8 +12,10 @@ interface LandingScreenProps {
 const LandingScreen: React.FC<LandingScreenProps> = ({ onStartClick }) => {
   return (
     <div className="flex flex-col items-center min-h-screen">
+      <Navbar onStartClick={onStartClick} />
+
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-b from-talkmatch-purple-light to-talkmatch-purple/30 py-20 px-6">
+      <section className="w-full bg-gradient-to-b from-talkmatch-purple-light to-talkmatch-purple/30 py-20 px-6 mt-16">
         <div className="max-w-5xl mx-auto flex flex-col items-center justify-center min-h-[70vh] text-center">
           <MotionWrapper delay={100}>
             <div className="mb-4">
@@ -48,7 +50,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onStartClick }) => {
       </section>
 
       {/* How It Works Section */}
-      <section className="w-full py-20 px-6 bg-white">
+      <section id="how-it-works" className="w-full py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <MotionWrapper>
             <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">How It Works</h2>
@@ -89,7 +91,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onStartClick }) => {
       </section>
 
       {/* Key Features Section */}
-      <section className="w-full py-20 px-6 bg-gradient-to-b from-white to-talkmatch-purple-light/30">
+      <section id="features" className="w-full py-20 px-6 bg-gradient-to-b from-white to-talkmatch-purple-light/30">
         <div className="max-w-5xl mx-auto">
           <MotionWrapper>
             <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Key Features</h2>
@@ -130,7 +132,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onStartClick }) => {
       </section>
 
       {/* Privacy Section */}
-      <section className="w-full py-20 px-6 bg-white">
+      <section id="privacy" className="w-full py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <MotionWrapper>
             <div className="text-center mb-10">
