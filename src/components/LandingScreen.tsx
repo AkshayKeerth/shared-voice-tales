@@ -1,8 +1,9 @@
 
 import React from "react";
-import { ArrowRight, ShieldCheck, MicVoice, UserCheck } from "lucide-react";
+import { ArrowRight, ShieldCheck, UserCheck } from "lucide-react";
 import MotionWrapper from "./MotionWrapper";
 import { Card, CardContent } from "./ui/card";
+import MicVoice from "./MicVoice";
 
 interface LandingScreenProps {
   onStartClick: () => void;

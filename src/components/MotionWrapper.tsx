@@ -61,13 +61,17 @@ const MotionWrapper: React.FC<MotionWrapperProps> = ({
     return "opacity-100 translate-y-0 translate-x-0 scale-100";
   };
 
+  // Use a string template for duration to ensure proper formatting
+  const durationStyle = isVisible ? `${duration}ms` : '0ms';
+
   return (
     <div
       ref={ref}
-      className={`transition-all ${
-        isVisible ? `duration-${duration}` : ""
-      } ${getAnimationClass()} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all ${getAnimationClass()} ${className}`}
+      style={{ 
+        transitionDuration: durationStyle,
+        transitionDelay: `${delay}ms` 
+      }}
     >
       {children}
     </div>

@@ -1,7 +1,12 @@
 
 import React from 'react';
 
-const MicVoice = ({ size = 24, className = "" }) => {
+interface MicVoiceProps {
+  size?: number;
+  className?: string;
+}
+
+const MicVoice: React.FC<MicVoiceProps> = ({ size = 24, className = "" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
