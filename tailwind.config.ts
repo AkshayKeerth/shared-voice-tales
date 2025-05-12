@@ -74,6 +74,11 @@ export default {
 					peach: "#FDE1D3",
 					gray: "#8E9196",
 					"dark-bg": "#1A1F2C",
+					"blue": "#33C3F0",
+					"blue-light": "#8EC5FC",
+					"blue-dark": "#0FA0CE",
+					"black": "#111111",
+					"black-light": "#222222",
 				}
 			},
 			borderRadius: {
@@ -113,6 +118,18 @@ export default {
 					"75%": { transform: "translateY(5px)" },
 					"100%": { transform: "translateY(0)" },
 				},
+				"float": {
+					"0%, 100%": { transform: "translateY(0)" },
+					"50%": { transform: "translateY(-10px)" },
+				},
+				"glow": {
+					"0%, 100%": { boxShadow: "0 0 5px rgba(51, 195, 240, 0.3)" },
+					"50%": { boxShadow: "0 0 20px rgba(51, 195, 240, 0.8)" }
+				},
+				"background-pan": {
+					"0%": { backgroundPosition: "0% center" },
+					"100%": { backgroundPosition: "200% center" }
+				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -122,11 +139,17 @@ export default {
 				"fade-out": "fade-out 0.3s ease-out forwards",
 				"scale-in": "scale-in 0.2s ease-out forwards",
 				"wave": "wave 1.5s ease-in-out infinite",
+				"float": "float 3s ease-in-out infinite",
+				"glow": "glow 2s ease-in-out infinite",
+				"background-pan": "background-pan 3s linear infinite",
 			},
 			backgroundImage: {
 				"gradient-purple": "linear-gradient(135deg, #9b87f5, #7E69AB)",
 				"gradient-warm": "linear-gradient(135deg, #FFDEE2, #FDE1D3)",
 				"gradient-calm": "linear-gradient(135deg, #E5DEFF, #D6BCFA)",
+				"gradient-blue": "linear-gradient(135deg, #33C3F0, #0FA0CE)",
+				"gradient-tech": "linear-gradient(90deg, #111111, #1A1F2C)",
+				"gradient-glow": "linear-gradient(45deg, #111111, #222222, #33C3F0, #222222, #111111)",
 			},
 		}
 	},
