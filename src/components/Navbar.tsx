@@ -5,7 +5,6 @@ import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MotionWrapper from "./MotionWrapper";
 import { cn } from "@/lib/utils";
-import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "@/contexts/ThemeContext";
 
 interface NavbarProps {
@@ -17,14 +16,24 @@ const Navbar: React.FC<NavbarProps> = ({ onStartClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   const { theme } = useTheme();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMouseMove);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   const toggleMenu = () => {
@@ -63,47 +72,74 @@ const Navbar: React.FC<NavbarProps> = ({ onStartClick }) => {
         isScrolled ? "py-2" : "py-4"
       )}
     >
-      {/* Futuristic blurred background effect with blue glow */}
+      {/* Advanced futuristic blurred background with reactive glow */}
       <motion.div
-        className={cn(
-          "absolute inset-0 backdrop-blur-xl transition-all duration-500",
-          isScrolled
-            ? theme === "dark" ? "bg-talkmatch-black/80 shadow-lg" : "bg-white/80 shadow-lg"
-            : theme === "dark" ? "bg-talkmatch-black/50" : "bg-white/50"
-        )}
+        className="absolute inset-0 backdrop-blur-xl transition-all duration-500 bg-talkmatch-black/80 overflow-hidden"
         animate={{
           backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)",
         }}
       >
-        {/* Interactive grid background */}
+        {/* 3D grid background */}
         <div className="grid-background"></div>
         
-        {/* Subtle gradient overlay with blue accents */}
-        <div className={cn(
-          "absolute inset-0 bg-gradient-to-r mix-blend-overlay",
-          theme === "dark" ? "from-talkmatch-blue/5 to-transparent" : "from-talkmatch-blue-dark/5 to-transparent"
-        )}></div>
-        
-        {/* Animated border bottom */}
+        {/* Animated glow overlay */}
         <motion.div 
-          className={cn(
-            "absolute bottom-0 left-0 right-0 h-[1px]",
-            theme === "dark" ? "bg-talkmatch-blue/30" : "bg-talkmatch-blue-dark/30"
-          )}
+          className="absolute inset-0 bg-gradient-to-r from-talkmatch-blue/5 to-transparent mix-blend-overlay"
           animate={{
-            opacity: isScrolled ? 1 : 0.3,
+            background: [
+              "linear-gradient(to right, rgba(51, 195, 240, 0.05), transparent)",
+              "linear-gradient(to right, rgba(51, 195, 240, 0.1), transparent)",
+              "linear-gradient(to right, rgba(51, 195, 240, 0.05), transparent)"
+            ]
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        />
+        
+        {/* Reactive mouse glow effect */}
+        <motion.div 
+          className="absolute w-[300px] h-[300px] rounded-full bg-talkmatch-blue/5 pointer-events-none"
+          animate={{
+            x: mousePosition.x - 150,
+            y: mousePosition.y - 150,
+            opacity: 0.15
+          }}
+          transition={{ type: "spring", bounce: 0, duration: 0.6 }}
+        />
+        
+        {/* Cyberpunk-inspired circuit lines */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-10" xmlns="http://www.w3.org/2000/svg">
+          <pattern id="circuit-pattern" width="100" height="100" patternUnits="userSpaceOnUse">
+            <path d="M20 20 H80 V80 H20 Z" fill="none" stroke="rgba(51, 195, 240, 0.3)" strokeWidth="1" />
+            <path d="M50 0 V100 M0 50 H100" fill="none" stroke="rgba(51, 195, 240, 0.2)" strokeWidth="1" />
+            <circle cx="50" cy="50" r="5" fill="rgba(51, 195, 240, 0.3)" />
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#circuit-pattern)" />
+        </svg>
+        
+        {/* Animated border bottom with pulse effect */}
+        <motion.div 
+          className="absolute bottom-0 left-0 right-0 h-[1px] bg-talkmatch-blue/30"
+          animate={{
+            opacity: isScrolled ? [0.3, 1, 0.3] : [0.1, 0.4, 0.1],
             boxShadow: isScrolled 
-              ? theme === "dark" 
-                ? "0 0 8px rgba(51, 195, 240, 0.5)" 
-                : "0 0 8px rgba(15, 160, 206, 0.5)"
-              : "none",
+              ? ["0 0 5px rgba(51, 195, 240, 0.3)", "0 0 15px rgba(51, 195, 240, 0.6)", "0 0 5px rgba(51, 195, 240, 0.3)"]
+              : ["0 0 2px rgba(51, 195, 240, 0.2)", "0 0 8px rgba(51, 195, 240, 0.4)", "0 0 2px rgba(51, 195, 240, 0.2)"]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            repeatType: "reverse"
           }}
         />
       </motion.div>
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex items-center justify-between">
-          {/* Logo with animated gradient effect */}
+          {/* Logo with more advanced animation */}
           <motion.div 
             className="flex items-center"
             variants={itemVariants}
@@ -111,33 +147,48 @@ const Navbar: React.FC<NavbarProps> = ({ onStartClick }) => {
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             <h1 className="text-xl font-bold mr-2 relative overflow-hidden">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-talkmatch-blue-light to-talkmatch-blue bg-[length:200%_auto] animate-background-pan">
+              <motion.span 
+                className="bg-clip-text text-transparent bg-gradient-to-r from-talkmatch-blue-light to-talkmatch-blue bg-[length:200%_auto]"
+                animate={{
+                  backgroundPosition: ["0% center", "200% center"]
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              >
                 TalkMatch
-              </span>
+              </motion.span>
               <motion.span
                 className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-talkmatch-blue-light to-talkmatch-blue"
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ delay: 1, duration: 0.8 }}
               />
+              <motion.span
+                className="absolute -inset-1 rounded-lg"
+                animate={{ 
+                  boxShadow: ["0 0 5px rgba(51, 195, 240, 0)", "0 0 15px rgba(51, 195, 240, 0.3)", "0 0 5px rgba(51, 195, 240, 0)"],
+                }}
+                transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+              />
             </h1>
           </motion.div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation with enhanced effects */}
           <div className="hidden md:flex items-center space-x-2">
             <motion.div className="flex items-center space-x-2" variants={itemVariants}>
               <NavButton href="#features">Features</NavButton>
               <NavButton href="#how-it-works">How It Works</NavButton>
               <NavButton href="#privacy">Privacy</NavButton>
               
-              {/* Theme Toggle */}
-              <ThemeToggle className="mx-2" />
-              
+              {/* Enhanced Start Button */}
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                className="glow-border rounded-lg overflow-hidden"
+                className="relative overflow-hidden glow-border rounded-lg"
               >
                 <NavButton
                   className="ml-2 px-6 py-2.5 bg-gradient-blue text-white rounded-lg hover:shadow-[0_0_15px_rgba(51,195,240,0.5)]"
@@ -150,37 +201,61 @@ const Navbar: React.FC<NavbarProps> = ({ onStartClick }) => {
                     transition={{ duration: 0.3 }}
                   />
                 </NavButton>
+                
+                {/* Animated particles around the button */}
+                {[...Array(5)].map((_, i) => (
+                  <motion.span
+                    key={i}
+                    className="absolute w-1 h-1 bg-talkmatch-blue/80 rounded-full"
+                    initial={{
+                      x: "50%",
+                      y: "50%",
+                      opacity: 0
+                    }}
+                    animate={{
+                      x: ["50%", `${30 + Math.random() * 40}%`],
+                      y: ["50%", `${30 + Math.random() * 40}%`],
+                      opacity: [0, 0.8, 0]
+                    }}
+                    transition={{
+                      duration: 2 + i * 0.6,
+                      repeat: Infinity,
+                      repeatType: "loop",
+                      ease: "easeInOut",
+                      delay: i * 0.2
+                    }}
+                  />
+                ))}
               </motion.div>
             </motion.div>
           </div>
 
-          {/* Mobile Nav Icons: Theme Toggle + Menu Button */}
+          {/* Mobile Menu Button with enhanced futuristic style */}
           <motion.div 
-            className="md:hidden flex items-center space-x-2"
+            className="md:hidden flex items-center"
             variants={itemVariants}
           >
-            {/* Theme Toggle for Mobile */}
-            <ThemeToggle />
-            
-            {/* Mobile Menu Button with futuristic style */}
             <motion.button
               onClick={toggleMenu}
-              className={cn(
-                "p-2 rounded-lg border transition-all duration-300",
-                theme === "dark"
-                  ? "bg-talkmatch-black-light text-talkmatch-blue border-talkmatch-blue/30 hover:border-talkmatch-blue/60 hover:shadow-[0_0_15px_rgba(51,195,240,0.3)]"
-                  : "bg-white text-talkmatch-blue-dark border-talkmatch-blue-dark/30 hover:border-talkmatch-blue-dark/60 hover:shadow-[0_0_15px_rgba(15,160,206,0.3)]"
-              )}
+              className="p-2 rounded-lg border border-talkmatch-blue/30 bg-talkmatch-black-light text-talkmatch-blue hover:border-talkmatch-blue/60 hover:shadow-[0_0_15px_rgba(51,195,240,0.3)]"
               whileTap={{ scale: 0.9 }}
               aria-label="Toggle menu"
             >
               <Menu size={24} />
+              <motion.span
+                className="absolute -inset-1 rounded-lg opacity-0"
+                animate={{ 
+                  opacity: [0, 0.5, 0],
+                  boxShadow: ["0 0 5px rgba(51, 195, 240, 0)", "0 0 10px rgba(51, 195, 240, 0.3)", "0 0 5px rgba(51, 195, 240, 0)"],
+                }}
+                transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
+              />
             </motion.button>
           </motion.div>
         </div>
       </div>
 
-      {/* Mobile Navigation Menu with futuristic animation */}
+      {/* Mobile Navigation Menu with enhanced futuristic animation */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -188,42 +263,62 @@ const Navbar: React.FC<NavbarProps> = ({ onStartClick }) => {
             animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className={cn(
-              "fixed inset-0 z-40 flex flex-col items-center justify-center",
-              theme === "dark" ? "bg-talkmatch-black/90" : "bg-white/90"
-            )}
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-talkmatch-black/90"
           >
-            {/* Grid background for mobile menu */}
+            {/* Enhanced grid background with 3D perspective for mobile menu */}
             <div className="grid-background"></div>
             
-            {/* Animated background elements */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className={cn(
-                    "absolute w-32 h-32 rounded-full",
-                    theme === "dark" ? "bg-talkmatch-blue/5" : "bg-talkmatch-blue-dark/5"
-                  )}
-                  initial={{ 
-                    x: Math.random() * window.innerWidth, 
-                    y: Math.random() * window.innerHeight,
-                    scale: 0.5
-                  }}
-                  animate={{ 
-                    x: Math.random() * window.innerWidth, 
-                    y: Math.random() * window.innerHeight,
-                    scale: [0.5, 1.5, 0.5],
-                    opacity: [0.3, 0.6, 0.3]
-                  }}
-                  transition={{ 
-                    repeat: Infinity, 
-                    duration: 10 + i * 2,
-                    repeatType: "reverse"
-                  }}
-                />
-              ))}
+            {/* 3D Animated background elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none perspective-1000">
+              <motion.div 
+                className="absolute w-full h-full"
+                animate={{ 
+                  rotateX: [0, 5, 0, -5, 0],
+                  rotateY: [0, 5, 0, -5, 0],
+                }}
+                transition={{ 
+                  duration: 10,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              >
+                {[...Array(10)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-32 h-32 rounded-full bg-talkmatch-blue/5"
+                    initial={{ 
+                      x: Math.random() * window.innerWidth, 
+                      y: Math.random() * window.innerHeight,
+                      scale: 0.5,
+                      rotateZ: 0
+                    }}
+                    animate={{ 
+                      x: Math.random() * window.innerWidth, 
+                      y: Math.random() * window.innerHeight,
+                      scale: [0.5, 1.5, 0.5],
+                      opacity: [0.2, 0.4, 0.2],
+                      rotateZ: [0, 180, 360]
+                    }}
+                    transition={{ 
+                      repeat: Infinity, 
+                      duration: 15 + i * 2,
+                      repeatType: "reverse",
+                      ease: "easeInOut"
+                    }}
+                  />
+                ))}
+              </motion.div>
             </div>
+            
+            {/* Digital circuit pattern overlay */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-10" xmlns="http://www.w3.org/2000/svg">
+              <pattern id="circuit-pattern-mobile" width="100" height="100" patternUnits="userSpaceOnUse">
+                <path d="M20 20 H80 V80 H20 Z" fill="none" stroke="rgba(51, 195, 240, 0.3)" strokeWidth="1" />
+                <path d="M50 0 V100 M0 50 H100" fill="none" stroke="rgba(51, 195, 240, 0.2)" strokeWidth="1" />
+                <circle cx="50" cy="50" r="5" fill="rgba(51, 195, 240, 0.3)" />
+              </pattern>
+              <rect width="100%" height="100%" fill="url(#circuit-pattern-mobile)" />
+            </svg>
             
             <motion.div 
               className="space-y-8 text-center relative z-10"
@@ -249,6 +344,7 @@ const Navbar: React.FC<NavbarProps> = ({ onStartClick }) => {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                className="relative"
               >
                 <MobileNavButton
                   className="bg-gradient-blue text-white px-8 py-3 rounded-lg inline-block shadow-[0_0_15px_rgba(51,195,240,0.3)] hover:shadow-[0_0_20px_rgba(51,195,240,0.5)]"
@@ -259,22 +355,32 @@ const Navbar: React.FC<NavbarProps> = ({ onStartClick }) => {
                 >
                   Start Talking
                 </MobileNavButton>
+                <motion.div
+                  className="absolute -inset-2 rounded-xl opacity-0"
+                  animate={{ 
+                    opacity: [0, 0.3, 0],
+                    boxShadow: ["0 0 5px rgba(51, 195, 240, 0)", "0 0 20px rgba(51, 195, 240, 0.4)", "0 0 5px rgba(51, 195, 240, 0)"],
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
+                />
               </motion.div>
             </motion.div>
 
-            {/* Close button with futuristic style */}
+            {/* Enhanced Close button with futuristic animation */}
             <motion.button
               onClick={() => setIsMenuOpen(false)}
-              className={cn(
-                "absolute top-6 right-6 p-2 rounded-lg border transition-all duration-300",
-                theme === "dark"
-                  ? "bg-talkmatch-black-light text-talkmatch-blue border-talkmatch-blue/30 hover:border-talkmatch-blue/60 hover:shadow-[0_0_15px_rgba(51,195,240,0.3)]"
-                  : "bg-white text-talkmatch-blue-dark border-talkmatch-blue-dark/30 hover:border-talkmatch-blue-dark/60 hover:shadow-[0_0_15px_rgba(15,160,206,0.3)]"
-              )}
+              className="absolute top-6 right-6 p-2 rounded-lg border border-talkmatch-blue/30 bg-talkmatch-black-light text-talkmatch-blue hover:border-talkmatch-blue/60 hover:shadow-[0_0_15px_rgba(51,195,240,0.3)]"
               whileHover={{ rotate: 90 }}
               whileTap={{ scale: 0.9 }}
             >
               <X size={24} />
+              <motion.span
+                className="absolute inset-0 rounded-lg"
+                animate={{ 
+                  boxShadow: ["0 0 0px rgba(51, 195, 240, 0)", "0 0 10px rgba(51, 195, 240, 0.5)", "0 0 0px rgba(51, 195, 240, 0)"],
+                }}
+                transition={{ duration: 1.5, repeat: Infinity, repeatType: "mirror" }}
+              />
             </motion.button>
           </motion.div>
         )}
@@ -283,15 +389,13 @@ const Navbar: React.FC<NavbarProps> = ({ onStartClick }) => {
   );
 };
 
-// Desktop Nav Button Component with enhanced hover effects for futuristic theme
+// Desktop Nav Button Component with enhanced hover effects
 const NavButton: React.FC<{
   children: React.ReactNode;
   href?: string;
   className?: string;
   onClick?: () => void;
-}> = ({ children, href, className, onClick }) => {
-  const { theme } = useTheme();
-  
+}> = ({ children, href, className, onClick }) => {  
   return href ? (
     <motion.a
       href={href}
@@ -307,14 +411,17 @@ const NavButton: React.FC<{
         tap: { y: 0 }
       }}
     >
-      <span className={cn(
-        "relative z-10 transition-colors duration-300", 
-        theme === "dark" 
-          ? "text-gray-300 hover:text-talkmatch-blue" 
-          : "text-gray-600 hover:text-talkmatch-blue-dark"
-      )}>
+      <span className="relative z-10 transition-colors duration-300 text-gray-300 hover:text-talkmatch-blue">
         {children}
       </span>
+      <motion.span 
+        className="absolute bottom-0 left-0 h-0.5 bg-talkmatch-blue/50 w-0"
+        variants={{
+          hover: { width: "100%" },
+          idle: { width: 0 }
+        }}
+        transition={{ duration: 0.3 }}
+      />
     </motion.a>
   ) : (
     <motion.button
@@ -335,15 +442,13 @@ const NavButton: React.FC<{
   );
 };
 
-// Mobile Nav Button Component with futuristic hover and tap animations
+// Mobile Nav Button Component with enhanced futuristic hover effects
 const MobileNavButton: React.FC<{
   children: React.ReactNode;
   href?: string;
   className?: string;
   onClick?: () => void;
 }> = ({ children, href, className, onClick }) => {
-  const { theme } = useTheme();
-  
   const buttonVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
@@ -359,10 +464,8 @@ const MobileNavButton: React.FC<{
     <motion.a
       href={href}
       className={cn(
-        "text-xl font-medium block py-3 px-8 rounded-lg transition-all hover-underline",
-        theme === "dark"
-          ? "text-gray-300 hover:text-talkmatch-blue" 
-          : "text-gray-600 hover:text-talkmatch-blue-dark",
+        "text-xl font-medium block py-3 px-8 rounded-lg transition-all",
+        "text-gray-300 hover:text-talkmatch-blue relative",
         className
       )}
       onClick={onClick}
@@ -371,14 +474,19 @@ const MobileNavButton: React.FC<{
       whileTap="tap"
     >
       {children}
+      <motion.span 
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-talkmatch-blue/50 w-0"
+        variants={{
+          hover: { width: "80%" },
+          visible: { width: 0 }
+        }}
+      />
     </motion.a>
   ) : (
     <motion.button
       className={cn(
         "text-xl font-medium block py-3 px-8 rounded-lg transition-all",
-        theme === "dark"
-          ? "hover:text-talkmatch-blue" 
-          : "hover:text-talkmatch-blue-dark",
+        "hover:text-talkmatch-blue relative",
         className
       )}
       onClick={onClick}

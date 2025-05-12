@@ -7,40 +7,7 @@
 
 @layer base {
   :root {
-    /* Light theme variables */
-    --background: 0 0% 100%;
-    --foreground: 220 15% 15%;
-
-    --card: 0 0% 98%;
-    --card-foreground: 220 15% 15%;
-
-    --popover: 0 0% 98%;
-    --popover-foreground: 220 15% 15%;
-
-    --primary: 199 89% 48%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 200 10% 90%;
-    --secondary-foreground: 220 15% 15%;
-
-    --muted: 220 10% 94%;
-    --muted-foreground: 220 10% 40%;
-
-    --accent: 199 89% 92%;
-    --accent-foreground: 220 15% 15%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 220 10% 88%;
-    --input: 220 10% 88%;
-    --ring: 199 89% 48%;
-
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    /* Dark theme variables - keep original dark theme values */
+    /* Dark theme variables only since we're removing light theme */
     --background: 220 15% 8%;
     --foreground: 210 20% 98%;
 
@@ -68,6 +35,8 @@
     --border: 220 15% 20%;
     --input: 220 15% 20%;
     --ring: 199 89% 48%;
+
+    --radius: 0.75rem;
   }
 
   * {
@@ -81,11 +50,7 @@
   
   /* Custom glassmorphism effect */
   .glass {
-    @apply backdrop-blur-md bg-white/5 border border-white/10 shadow-md dark:bg-white/5 dark:border-white/10;
-  }
-  
-  .light .glass {
-    @apply backdrop-blur-md bg-black/5 border border-black/10 shadow-md;
+    @apply backdrop-blur-md bg-white/5 border border-white/10 shadow-md;
   }
   
   .gradient-text {
@@ -98,11 +63,7 @@
   }
   
   .btn-secondary {
-    @apply bg-talkmatch-black-light text-talkmatch-blue border border-talkmatch-blue/30 px-8 py-3 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center dark:bg-talkmatch-black-light;
-  }
-  
-  .light .btn-secondary {
-    @apply bg-white text-talkmatch-blue-dark border border-talkmatch-blue/30;
+    @apply bg-talkmatch-black-light text-talkmatch-blue border border-talkmatch-blue/30 px-8 py-3 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center;
   }
   
   .btn-destructive {
@@ -116,20 +77,12 @@
   
   /* Input styles */
   .input-custom {
-    @apply bg-talkmatch-black-light/80 border border-talkmatch-blue/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-talkmatch-blue/50 focus:outline-none transition-all duration-300 dark:bg-talkmatch-black-light/80;
-  }
-
-  .light .input-custom {
-    @apply bg-white/80 border border-talkmatch-blue/20;
+    @apply bg-talkmatch-black-light/80 border border-talkmatch-blue/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-talkmatch-blue/50 focus:outline-none transition-all duration-300;
   }
 
   /* Neo-brutalism effect */
   .neo-card {
-    @apply relative bg-talkmatch-black-light border-2 border-talkmatch-blue rounded-lg shadow-[5px_5px_0px_0px_rgba(51,195,240,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(51,195,240,0.4)] dark:bg-talkmatch-black-light;
-  }
-  
-  .light .neo-card {
-    @apply bg-white border-2 border-talkmatch-blue-dark;
+    @apply relative bg-talkmatch-black-light border-2 border-talkmatch-blue rounded-lg shadow-[5px_5px_0px_0px_rgba(51,195,240,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(51,195,240,0.4)];
   }
   
   /* Futuristic glow effects */
@@ -141,13 +94,17 @@
     @apply border border-talkmatch-blue/50 shadow-[0_0_10px_rgba(51,195,240,0.3)];
   }
 
-  /* Interactive background grid */
+  /* Enhanced interactive background grid with 3D perspective */
   .grid-background {
     @apply absolute inset-0 bg-[linear-gradient(rgba(51,195,240,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(51,195,240,0.05)_1px,transparent_1px)] bg-[size:50px_50px] opacity-10;
+    transform-style: preserve-3d;
+    perspective: 1000px;
   }
   
-  .light .grid-background {
-    @apply bg-[linear-gradient(rgba(15,160,206,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(15,160,206,0.05)_1px,transparent_1px)];
+  /* Enhanced 3D perspective class */
+  .perspective-1000 {
+    perspective: 1000px;
+    transform-style: preserve-3d;
   }
   
   /* Futuristic scrollbar */
@@ -157,11 +114,7 @@
   }
   
   ::-webkit-scrollbar-track {
-    @apply bg-talkmatch-black-light dark:bg-talkmatch-black-light;
-  }
-  
-  .light ::-webkit-scrollbar-track {
-    @apply bg-gray-100;
+    @apply bg-talkmatch-black-light;
   }
   
   ::-webkit-scrollbar-thumb {
@@ -175,5 +128,48 @@
   /* Animated underline effect */
   .hover-underline {
     @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-talkmatch-blue after:transition-all after:duration-300 hover:after:w-full;
+  }
+  
+  /* Advanced animations */
+  @keyframes pulse-glow {
+    0%, 100% { 
+      filter: drop-shadow(0 0 5px rgba(51, 195, 240, 0.3));
+      opacity: 0.8;
+    }
+    50% { 
+      filter: drop-shadow(0 0 15px rgba(51, 195, 240, 0.7));
+      opacity: 1;
+    }
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+  
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  
+  .animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+  }
+  
+  @keyframes background-pan {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  
+  .animate-background-pan {
+    animation: background-pan 3s linear infinite;
+  }
+  
+  /* 3D text effect */
+  .text-3d {
+    text-shadow: 0 1px 0 rgba(51, 195, 240, 0.4),
+                 0 2px 0 rgba(51, 195, 240, 0.3),
+                 0 3px 0 rgba(51, 195, 240, 0.2),
+                 0 4px 0 rgba(51, 195, 240, 0.1),
+                 0 5px 10px rgba(0, 0, 0, 0.8);
   }
 }
