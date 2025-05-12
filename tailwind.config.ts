@@ -130,6 +130,23 @@ export default {
 					"0%": { backgroundPosition: "0% center" },
 					"100%": { backgroundPosition: "200% center" }
 				},
+				"rotate-slow": {
+					"0%": { transform: "rotate(0deg)" },
+					"100%": { transform: "rotate(360deg)" }
+				},
+				"breathe": {
+					"0%, 100%": { transform: "scale(1)" },
+					"50%": { transform: "scale(1.1)" }
+				},
+				"ripple": {
+					"0%": { transform: "scale(0)", opacity: "1" },
+					"100%": { transform: "scale(4)", opacity: "0" }
+				},
+				"pulse-ring": {
+					"0%": { transform: "scale(0.8)", opacity: "0.8" },
+					"50%": { transform: "scale(1)", opacity: "0.4" },
+					"100%": { transform: "scale(0.8)", opacity: "0.8" }
+				}
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -142,6 +159,10 @@ export default {
 				"float": "float 3s ease-in-out infinite",
 				"glow": "glow 2s ease-in-out infinite",
 				"background-pan": "background-pan 3s linear infinite",
+				"rotate-slow": "rotate-slow 12s linear infinite",
+				"breathe": "breathe 4s ease-in-out infinite",
+				"ripple": "ripple 1.5s ease-out infinite",
+				"pulse-ring": "pulse-ring 3s ease-out infinite",
 			},
 			backgroundImage: {
 				"gradient-purple": "linear-gradient(135deg, #9b87f5, #7E69AB)",
@@ -150,6 +171,7 @@ export default {
 				"gradient-blue": "linear-gradient(135deg, #33C3F0, #0FA0CE)",
 				"gradient-tech": "linear-gradient(90deg, #111111, #1A1F2C)",
 				"gradient-glow": "linear-gradient(45deg, #111111, #222222, #33C3F0, #222222, #111111)",
+				"gradient-cyber": "linear-gradient(135deg, #111111, #1A1F2C, #33C3F0, #1A1F2C, #111111)",
 			},
 		}
 	},

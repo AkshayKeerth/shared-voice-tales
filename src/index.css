@@ -172,4 +172,9 @@
                  0 4px 0 rgba(51, 195, 240, 0.1),
                  0 5px 10px rgba(0, 0, 0, 0.8);
   }
+  
+  /* New radial gradient background */
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-from) 0%, var(--tw-gradient-via) 50%, var(--tw-gradient-to) 100%);
+  }
 }
