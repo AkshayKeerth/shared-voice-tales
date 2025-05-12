@@ -7,6 +7,40 @@
 
 @layer base {
   :root {
+    /* Light theme variables */
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 98%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 10% 90%;
+    --secondary-foreground: 220 15% 15%;
+
+    --muted: 220 10% 94%;
+    --muted-foreground: 220 10% 40%;
+
+    --accent: 199 89% 92%;
+    --accent-foreground: 220 15% 15%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 10% 88%;
+    --input: 220 10% 88%;
+    --ring: 199 89% 48%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark theme variables - keep original dark theme values */
     --background: 220 15% 8%;
     --foreground: 210 20% 98%;
 
@@ -34,8 +68,6 @@
     --border: 220 15% 20%;
     --input: 220 15% 20%;
     --ring: 199 89% 48%;
-
-    --radius: 0.75rem;
   }
 
   * {
@@ -43,13 +75,17 @@
   }
 
   body {
-    @apply bg-talkmatch-black text-foreground font-sans;
+    @apply bg-background text-foreground font-sans transition-colors duration-300;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   
   /* Custom glassmorphism effect */
   .glass {
-    @apply backdrop-blur-md bg-white/5 border border-white/10 shadow-md;
+    @apply backdrop-blur-md bg-white/5 border border-white/10 shadow-md dark:bg-white/5 dark:border-white/10;
+  }
+  
+  .light .glass {
+    @apply backdrop-blur-md bg-black/5 border border-black/10 shadow-md;
   }
   
   .gradient-text {
@@ -62,7 +98,11 @@
   }
   
   .btn-secondary {
-    @apply bg-talkmatch-black-light text-talkmatch-blue border border-talkmatch-blue/30 px-8 py-3 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center;
+    @apply bg-talkmatch-black-light text-talkmatch-blue border border-talkmatch-blue/30 px-8 py-3 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center dark:bg-talkmatch-black-light;
+  }
+  
+  .light .btn-secondary {
+    @apply bg-white text-talkmatch-blue-dark border border-talkmatch-blue/30;
   }
   
   .btn-destructive {
@@ -76,12 +116,20 @@
   
   /* Input styles */
   .input-custom {
-    @apply bg-talkmatch-black-light/80 border border-talkmatch-blue/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-talkmatch-blue/50 focus:outline-none transition-all duration-300;
+    @apply bg-talkmatch-black-light/80 border border-talkmatch-blue/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-talkmatch-blue/50 focus:outline-none transition-all duration-300 dark:bg-talkmatch-black-light/80;
+  }
+
+  .light .input-custom {
+    @apply bg-white/80 border border-talkmatch-blue/20;
   }
 
   /* Neo-brutalism effect */
   .neo-card {
-    @apply relative bg-talkmatch-black-light border-2 border-talkmatch-blue rounded-lg shadow-[5px_5px_0px_0px_rgba(51,195,240,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(51,195,240,0.4)];
+    @apply relative bg-talkmatch-black-light border-2 border-talkmatch-blue rounded-lg shadow-[5px_5px_0px_0px_rgba(51,195,240,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(51,195,240,0.4)] dark:bg-talkmatch-black-light;
+  }
+  
+  .light .neo-card {
+    @apply bg-white border-2 border-talkmatch-blue-dark;
   }
   
   /* Futuristic glow effects */
@@ -98,6 +146,10 @@
     @apply absolute inset-0 bg-[linear-gradient(rgba(51,195,240,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(51,195,240,0.05)_1px,transparent_1px)] bg-[size:50px_50px] opacity-10;
   }
   
+  .light .grid-background {
+    @apply bg-[linear-gradient(rgba(15,160,206,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(15,160,206,0.05)_1px,transparent_1px)];
+  }
+  
   /* Futuristic scrollbar */
   ::-webkit-scrollbar {
     width: 5px;
@@ -105,7 +157,11 @@
   }
   
   ::-webkit-scrollbar-track {
-    @apply bg-talkmatch-black-light;
+    @apply bg-talkmatch-black-light dark:bg-talkmatch-black-light;
+  }
+  
+  .light ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
   }
   
   ::-webkit-scrollbar-thumb {
